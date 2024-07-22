@@ -17,7 +17,7 @@ RUN adduser \
 WORKDIR /app
 COPY . .
 
-RUN GOFLAGS=-mod=vendor CGO_ENABLED=0 GO111MODULES=on go build -o report-4111-api ./app/report/
+RUN CGO_ENABLED=0 GO111MODULES=on go build -o weather-api ./app/weather/
 
 FROM scratch
 
@@ -32,4 +32,4 @@ COPY --from=builder /app/weather-api /app
 #avoid rootless
 USER appuser:appuser
 
-ENTRYPOINT ["/weather-api"]
+ENTRYPOINT ["/app/weather-api"]
